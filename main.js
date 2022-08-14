@@ -14,10 +14,16 @@ for (let i = 0; i < buttons.length; i++) {
       }
     }
 
+    let displayValue = display.value
+
     switch (key) {
       case 'Backspace':
       case 'Delete':
         display.value = display.value.substr(0, display.value.length - 1)
+        if (!display.value) {
+          display.classList.remove('error')
+          display.setAttribute('placeholder', '')
+        }
         break
 
       case 'Escape':
@@ -29,7 +35,7 @@ for (let i = 0; i < buttons.length; i++) {
       case 'Enter':
         if (display.value)
           try {
-            display.value = eval(display.value)
+            display.value = eval(displayValue)
           } catch {
             display.classList.toggle('error')
             display.setAttribute('placeholder', 'ERROR')
@@ -41,7 +47,9 @@ for (let i = 0; i < buttons.length; i++) {
       case '-':
       case '*':
       case '/':
+      case '.':
         display.value += key
+        display.setAttribute('placeholder', '')
         break
     }
   }
